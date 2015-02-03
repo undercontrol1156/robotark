@@ -55,7 +55,7 @@ var CATEGORIES = {
     'team': [
         'scouting',
         'sponsors',
-        'chairmans'
+        'chairmans',
         'events',
         'websites'
     ]
