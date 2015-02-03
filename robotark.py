@@ -85,6 +85,7 @@ CATEGORIES = {
     'team': [
         'scouting',
         'sponsors',
+        'chairmans',
         'events',
         'websites'
     ]

@@ -55,6 +55,7 @@ var CATEGORIES = {
     'team': [
         'scouting',
         'sponsors',
+        'chairmans'
         'events',
         'websites'
     ]
@@ -94,6 +95,7 @@ function setOptions(chosen) {
         selbox.options[selbox.options.length] = new Option('Scouting', '/team/scouting');
         selbox.options[selbox.options.length] = new Option('Sponsors', '/team/sponsors');
         selbox.options[selbox.options.length] = new Option('Websites', '/team/websites');
+        selbox.options[selbox.options.length] = new Option('Chairmans', '/team/chairmans');
     }
 }
 function setOptions2(chosen) {

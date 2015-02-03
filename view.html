@@ -4,14 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="description" content="Documents repository for FRC Teams">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RobotArk</title>
 
     <link rel="stylesheet" href="/static/stylesheets/h5bp.css">
     <link rel="stylesheet" href="/static/stylesheets/components/components.css">
     <link rel="stylesheet" href="/static/stylesheets/main.css">
-    
+
     <script src="/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="/static/js/vendor/jquery-1.11.0.min.js"></script>
 
@@ -54,31 +54,25 @@
     <main>
         <br>
         <form action="/search" method="get">
-        <input type="text" name="query">
+            <input type="text" name="query">
             <select name="category">
-              <option value="title">Title</option>
-              <option value="subtitle">Subtitle</option>
-              <option value="author">Team</option>
+                <option value="title">Title</option>
+                <option value="subtitle">Subtitle</option>
+                <option value="author">Team</option>
             </select>
             <button>Search</button>
         </form>
         {% for c in category %}
-        <h2>{{ c.capitalize() }}</h2>
-        {% endfor %}
-        {% if search %}
-        <h2>Search results for {{ query }}</h2>
-        {% endif %}
+        <h2>{{ c.capitalize() }}</h2> {% endfor %} {% if search %}
+        <h2>Search results for {{ query }}</h2> {% endif %}
         <div id="subcategories">
             <ul>
                 {% if isinstance(nested, str) %}
-                    <li>{{ n }}</li>
-                {% else %}
-                {% if nested %}
-                    {% for n in nested %}
-                        <li><a href="{{ base }}/{{ n }}">{{ n.capitalize() }}</a></li>
-                    {% endfor %}
-                {% endif %}
-                {% endif %}
+                <li>{{ n }}</li>
+                {% else %} {% if nested %} {% for n in nested %}
+                <li><a href="{{ base }}/{{ n }}">{{ n.capitalize() }}</a>
+                </li>
+                {% endfor %} {% endif %} {% endif %}
             </ul>
         </div>
         <br>
@@ -103,7 +97,15 @@
         </div>
     </main>
     <footer>
-      Developed by <a href="http://undercontrol1156.com">FRC Team #1156 Under Control</a>
+        <a href="https://facebook.com/TeamUnderControl1156"><img src="/static/images/Facebook.png">
+        </a>
+        <a href="https://instagram.com/UnderControl1156"><img src="/static/images/Instagram.png">
+        </a>
+        <a href="https://twitter.com/UnderCtrl1156"><img src="/static/images/Twitter.png">
+        </a>
+        <a href="https://github.com/undercontrol1156/"><img src="/static/images/Github.png">
+        </a>
+        &nbsp; - &nbsp; Developed by <a href="http://undercontrol1156.com">FRC Team #1156 Under Control</a>
     </footer>
     <script src="/static/js/main.js"></script>
 
@@ -120,7 +122,8 @@
         a.src = g;
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-XXXXX-X', 'auto');
+
+    ga('create', 'UA-49241103-3', 'auto');
     ga('send', 'pageview');
     </script>
     <!-- Built with love using Web Starter Kit -->
