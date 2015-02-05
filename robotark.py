@@ -198,10 +198,12 @@ class UploadHandler(BaseUploadHandler):
 
 class FileHandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, file_key):
-        if not blobstore.get(file_key):
+        blob_info = blobstore.BlobInfo.get(file_key)
+        if not blob_info:  # blobstore.get(file_key):
             self.error(404)
         else:
-            self.send_blob(file_key)
+            self.send_blob(blob_info, save_as=True)
+            # self.send_blob(file_key)
 
 
 class CategoryHandler(BaseHandler):
@@ -223,7 +225,7 @@ class CategoryHandler(BaseHandler):
                     nested = nested.get(c)
             print nested
         else:
-            print 'wrong category madafaka'
+            print 'invalid category'
 
         content = {
             'posts': posts,
