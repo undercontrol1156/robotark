@@ -6,7 +6,8 @@ var CATEGORIES = {
             'datasheets'
         ],
         'gearbox': 'gearbox',
-        'drivetrain': 'drivetrain'
+        'drivetrain': 'drivetrain',
+        'design': 'design'
     },
     'electronics': {
         'datasheets': [
@@ -79,6 +80,7 @@ function setOptions(chosen) {
     }
     if (chosen === "mechanics") {
         selbox.options[selbox.options.length] = new Option('General', '/mechanics/general');
+        selbox.options[selbox.options.length] = new Option('Design', '/mechanics/design');
         selbox.options[selbox.options.length] = new Option('Pneumatics', '/mechanics/pneumatics');
         selbox.options[selbox.options.length] = new Option('Gear Box', '/mechanics/gearbox');
         selbox.options[selbox.options.length] = new Option('Drivetrain', '/mechanics/drivetrain');

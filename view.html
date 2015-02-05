@@ -83,13 +83,26 @@
                     <table>
                         <tr>
                             <td>{{ post.title[0].value }}</td>
-                            <td><a href="http://www.thebluealliance.com/team/{{ post.author[0].value.replace('#', '') }}">{{ post.author[0].value }}</td>
+                            <td><a href="http://www.thebluealliance.com/team/{{ post.author[0].value.replace('#', '').split(' ')[0] }}">{{ post.author[0].value }}</td>
                         </tr>
                         <tr>
                             <td>{{ post.subtitle[0].value }}</td>
-                            <td><a href="/file/{{ post.file_key[0].value }}">Download here</a>
+                            <td><a href="{{ post.file_key[0].value }}">Download here</a>
                             </td>
                         </tr>
+                        {% if users.is_current_user_admin() %}
+                        <tr>
+                            <td>
+                                <form action="/delete" method="post">
+                                    <input type="hidden" name="id" value="{{ post.doc_id }}">
+                                    <button>Delete</button>
+                                </form>
+                            </td>
+                            <td>
+                                Poster {{ post.poster_name[0].value }}
+                            </td>
+                        </tr>
+                        {% endif %}
                     </table>
                 </li>
                 {% endfor %}

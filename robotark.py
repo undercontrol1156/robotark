@@ -32,7 +32,8 @@ CATEGORIES = {
             'datasheets'
         ],
         'gearbox': 'gearbox',
-        'drivetrain': 'drivetrain'
+        'drivetrain': 'drivetrain',
+        'design': 'design'
     },
     'electronics': {
         'datasheets': [
@@ -182,6 +183,13 @@ class UploadHandler(BaseUploadHandler):
         if not user:
             self.error(401)
             self.response.write('Not authorized')
+            return
+        if self.request.get('link'):
+            print "got url"
+            file_key = self.request.get('link')
+        else:
+            print "got file"
+            file_key = '/file/' + str(self.get_uploads()[0].key())
         post = search.Document(
             fields=[
                 search.TextField(name='poster_id', value=user.user_id()),
@@ -190,7 +198,7 @@ class UploadHandler(BaseUploadHandler):
                 search.TextField(name='title', value=self.request.get('title')),
                 search.TextField(name='subtitle', value=self.request.get('subtitle')),
                 search.TextField(name='url', value=self.request.get('subsubcategory')),
-                search.TextField(name='file_key', value=str(self.get_uploads()[0].key()))
+                search.TextField(name='file_key', value=file_key)
             ])
         index.put(post)
         self.redirect('/')
@@ -254,6 +262,18 @@ class SearchPage(BaseHandler):
         self.response.write(JINJA_ENVIRONMENT.get_template("view.html").render(content))
 
 
+class DeleteHandler(BaseHandler):
+    def post(self):
+        if users.is_current_user_admin():
+            try:
+                index.delete(self.request.get('id'))
+            except search.Error:
+                self.error(404)
+                print 'no such Document'
+        else:
+            self.error(403)
+
+
 class MePage(BaseHandler):
     def get(self):
         user = users.get_current_user()
@@ -269,6 +289,7 @@ application = webapp2.WSGIApplication([
     ('/upload', UploadPage),
     ('/about', AboutPage),
     ('/search', SearchPage),
+    ('/delete', DeleteHandler),
     ('/me', MePage),
     ('/file/([^/]+)?', FileHandler),
     ('/upload_handler', UploadHandler),
