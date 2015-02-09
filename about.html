@@ -43,7 +43,7 @@
             </li>
             <li><a href="/about">About</a>
             </li>
-            <li>{% if user %}<a>Me</a>{% else %} <a href="{{ users.create_login_url() }}">Login</a>{% endif %}</li>
+            <li>{% if user %}<a href="/me">Me</a>{% else %} <a href="{{ users.create_login_url() }}">Login</a>{% endif %}</li>
         </ul>
     </nav>
 
@@ -52,8 +52,9 @@
         <p>Welcome to RobotArk!</p>
 
         <h2>What is this?</h2>
-        <p>TODO</p>
-        <p>To start using it, just click on one of the categories above!</p>
+        <p>RobotArk is a tool developed by team Under Control to help teams to find resources about the FIRST Robotics Competition.</p>
+        <p>It's completely open source and licensed under the <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPLv3 license.</a> You can help by forking the project on <a href="https://github.com/undercontrol1156/robotark">GitHub</a> and submitting pull requests or by filling issues.</p>
+        <h4>Built with ❤ by Team #1156 Under Control</h4>
     </main>
 
     <footer>
