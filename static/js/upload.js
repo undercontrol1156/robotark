@@ -98,6 +98,7 @@ function setOptions(chosen) {
         selbox.options[selbox.options.length] = new Option('Sponsors', '/team/sponsors');
         selbox.options[selbox.options.length] = new Option('Websites', '/team/websites');
         selbox.options[selbox.options.length] = new Option('Chairmans', '/team/chairmans');
+        selbox.options[selbox.options.length] = new Option('------', '/team');
     }
 }
 function setOptions2(chosen) {
@@ -105,10 +106,10 @@ function setOptions2(chosen) {
     var selbox = document.uploadForm.subsubcategory;
     selbox.options.length = 0;
     if (chosen === "/electronics/controlsystem") {
-        selbox.options[selbox.options.length] = new Option('cRIO', '/electronics/tutorials/crio');
-        selbox.options[selbox.options.length] = new Option('RoboRIO', '/electronics/tutorials/roborio');
-        selbox.options[selbox.options.length] = new Option('Arduino', '/electronics/tutorials/arduino');
-        selbox.options[selbox.options.length] = new Option('Others', '/electronics/tutorials/others');
+        selbox.options[selbox.options.length] = new Option('cRIO', '/electronics/controlsystem/crio');
+        selbox.options[selbox.options.length] = new Option('RoboRIO', '/electronics/controlsystem/roborio');
+        selbox.options[selbox.options.length] = new Option('Arduino', '/electronics/controlsystem/arduino');
+        selbox.options[selbox.options.length] = new Option('Others', '/electronics/controlsystem/others');
     }
     if (chosen === "/electronics/datasheets") {
         selbox.options[selbox.options.length] = new Option('Sensors', '/electronics/datasheets/sensors');

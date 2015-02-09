@@ -13,6 +13,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import users
 
 config = {}
+# Yay sending secret keys to GitHub
 config['webapp2_extras.sessions'] = {
     'secret_key': 'jhsdfln454toucre8n84r83yy',
 }
@@ -22,7 +23,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-JINJA_ENVIRONMENT.globals = {'isinstance': isinstance, 'str': str}
+JINJA_ENVIRONMENT.globals = {'isinstance': isinstance, 'str': str, 'list': list}
+
 
 CATEGORIES = {
     'mechanics': {
@@ -94,16 +96,6 @@ CATEGORIES = {
 
 
 index = search.Index(name="posts")
-
-
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ndb.Key):
-            o = o.get(o)
-        if isinstance(o, ndb.Model):
-            return o.to_dict()
-        elif isinstance(o, (datetime, date, time)):
-            return str(o)
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -180,6 +172,7 @@ class UploadPage(BaseHandler):
 class UploadHandler(BaseUploadHandler):
     def post(self):
         user = users.get_current_user()
+        # Bug or someone trying to hack us
         if not user:
             self.error(401)
             self.response.write('Not authorized')
@@ -221,6 +214,7 @@ class CategoryHandler(BaseHandler):
         category = list(path.split('/'))
         print category
         nested = None
+        # Don't ask me what's going on here
         if CATEGORIES.get(category[1]):
             nested = CATEGORIES.get(category[1])
             for c in category[2:]:
@@ -234,7 +228,7 @@ class CategoryHandler(BaseHandler):
             print nested
         else:
             print 'invalid category'
-
+        # EODM (End of dark magic)
         content = {
             'posts': posts,
             'user': users.get_current_user,
@@ -262,6 +256,17 @@ class SearchPage(BaseHandler):
         self.response.write(JINJA_ENVIRONMENT.get_template("view.html").render(content))
 
 
+class ShortLinkHandler(BaseHandler):
+    def get(self, id):
+        post = [index.get(id)]
+        content = {
+            'posts': post,
+            'user': users.get_current_user,
+            'users': users
+        }
+        self.response.write(JINJA_ENVIRONMENT.get_template("view.html").render(content))
+
+
 class DeleteHandler(BaseHandler):
     def post(self):
         if users.is_current_user_admin():
@@ -284,9 +289,15 @@ class MePage(BaseHandler):
         self.response.write(JINJA_ENVIRONMENT.get_template("me.html").render(content))
 
 
+# # # # # # # # # # # # BEGIN API # # # # # # # # # # # # # #
+#                  TODO: Develop API                        #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
 application = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/upload', UploadPage),
+    ('/link/([^/]+)?', ShortLinkHandler),
     ('/about', AboutPage),
     ('/search', SearchPage),
     ('/delete', DeleteHandler),
