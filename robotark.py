@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import json
 from datetime import datetime, date, time
@@ -187,6 +189,10 @@ class UploadHandler(BaseUploadHandler):
         else:
             print "got file"
             file_key = '/file/' + str(self.get_uploads()[0].key())
+        if self.request.get('stage'):
+            stage = self.request.get('stage')
+        else:
+            stage = "public"
         post = search.Document(
             fields=[
                 search.TextField(name='poster_id', value=user.user_id()),
@@ -196,7 +202,7 @@ class UploadHandler(BaseUploadHandler):
                 search.TextField(name='subtitle', value=self.request.get('subtitle')),
                 search.TextField(name='url', value=self.request.get('subsubcategory')),
                 search.TextField(name='file_key', value=file_key),
-                search.TextField(name='private', value=self.request.get('stage'))
+                search.TextField(name='private', value=stage)
             ])
         if self.request.get('stage') == 'staged':
             message.body = 'O usuário %s postou um novo arquivo. Vá a robotark.org/review para revisar' % user.nickname()
