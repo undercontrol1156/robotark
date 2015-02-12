@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-us">
+<html lang="">
 
 <head>
     <meta charset="utf-8">
@@ -12,6 +12,26 @@
     <link rel="stylesheet" href="/static/stylesheets/main.css">
     <script src="/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="/static/js/vendor/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/vendor/jquery.flot.js"></script>
+    <script src="/static/js/vendor/jquery.flot.categories.js"></script>
+    <script type="text/javascript">
+        var data = {{ data|safe }}
+        $(function() {
+            $.plot("#placeholder", [ data ], {
+                series: {
+                    bars: {
+                        show: true,
+                        barWidth: 0.8,
+                        align: "center"
+                    }
+                },
+                xaxis: {
+                    mode: "categories",
+                    tickLength: 0
+                }
+            });
+    });
+    </script>
 </head>
 
 <body>
@@ -19,7 +39,7 @@
         <div class="app-bar-container">
             <button class="menu"><img src="/static/images/hamburger.svg" alt="Menu">
             </button>
-            <h1 class="logo">RobotArk</h1>
+            <img class="logo" src="/static/images/logo.png">
             <section class="app-bar-actions">
                 <!-- Put App Bar Buttons Here -->
             </section>
@@ -48,11 +68,8 @@
     </nav>
 
     <main>
-        <h1>Hello, {{ user.nickname() }}!</h1>
-        <p>Welcome to RobotArk!</p>
-
-        <h2><a href="{{ users.create_logout_url('/') }}">Logout</a></h2>
-
+    <br>
+        <div id="placeholder" style="width: 800px; height: 400px"></div>
     </main>
 
     <footer>
@@ -64,7 +81,7 @@
         </a>
         <a href="https://github.com/undercontrol1156/"><img src="/static/images/Github.png">
         </a>
-        &nbsp; - &nbsp; Developed by <a href="http://undercontrol156.com">FRC Team #1156 Under Control</a>
+        &nbsp; - &nbsp; Developed by <a href="http://undercontrol1156.com">FRC Team #1156 Under Control</a>
         &nbsp; - &nbsp; <a href="/about">About</a>
         {% if users.is_current_user_admin() %} &nbsp; - &nbsp; <a href="/review">Review</a> {% endif %}
     </footer>

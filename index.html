@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/stylesheets/h5bp.css">
     <link rel="stylesheet" href="/static/stylesheets/components/components.css">
     <link rel="stylesheet" href="/static/stylesheets/main.css">
-    <script src="/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js" async></script>
     <script src="/static/js/vendor/jquery-1.11.0.min.js"></script>
 </head>
 
@@ -41,7 +41,7 @@
             </li>
             <li><a href="/upload">Upload</a>
             </li>
-            <li><a href="/about">About</a>
+            <li><a href="/stats">Stats</a>
             </li>
             <li>{% if user %}<a href="/me">Me</a>{% else %} <a href="{{ users.create_login_url() }}">Login</a>{% endif %}</li>
         </ul>
@@ -76,6 +76,8 @@
         <a href="https://github.com/undercontrol1156/"><img src="/static/images/Github.png">
         </a>
         &nbsp; - &nbsp; Developed by <a href="http://undercontrol1156.com">FRC Team #1156 Under Control</a>
+        &nbsp; - &nbsp; <a href="/about">About</a>
+        {% if users.is_current_user_admin() %} &nbsp; - &nbsp; <a href="/review">Review</a> {% endif %}
     </footer>
     <script src="/static/js/main.js"></script>
 

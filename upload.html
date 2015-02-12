@@ -39,7 +39,7 @@
             </li>
             <li><a href="/upload">Upload</a>
             </li>
-            <li><a href="/about">About</a>
+            <li><a href="/stats">Stats</a>
             </li>
             <li>{% if user %}<a href="/me">Me</a>{% else %} <a href="{{ users.create_login_url() }}">Login</a>{% endif %}</li>
         </ul>
@@ -58,6 +58,7 @@
             <br>
             <br> Author:
             <input type="text" name="author" value="#0000" required>
+            e.g.: #1156 Under Control
             <br>
             <br> Category:
             <select id="category" name="category" onchange="setOptions(document.uploadForm.category.options[document.uploadForm.category.selectedIndex].value);">
@@ -85,9 +86,13 @@
             Link: <input type="text" name="link">
             <br>
             <br>
+            {% if users.is_current_user_admin() %}
+                Delay post <input type="checkbox" name="stage" value="staged"> 
+            {% endif %}
+            <br>
             <button id="send">Send</button>
         </form>
-        <p>Maximum size: 32MB</p>
+        <p>Maximum file size: 32MB</p>
     </main>
     <footer>
         <a href="https://facebook.com/TeamUnderControl1156"><img src="/static/images/Facebook.png">
@@ -99,6 +104,8 @@
         <a href="https://github.com/undercontrol1156/"><img src="/static/images/Github.png">
         </a>
         &nbsp; - &nbsp; Developed by <a href="http://undercontrol1156.com">FRC Team #1156 Under Control</a>
+        &nbsp; - &nbsp; <a href="/about">About</a>
+        {% if users.is_current_user_admin() %} &nbsp; - &nbsp; <a href="/review">Review</a> {% endif %}
     </footer>
     <!-- build:js scripts/main.min.js -->
     <script src="/static/js/main.js"></script>

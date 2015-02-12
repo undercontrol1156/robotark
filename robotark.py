@@ -11,12 +11,16 @@ from google.appengine.api import search
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import users
+from google.appengine.api import mail
 
 config = {}
 # Yay sending secret keys to GitHub
 config['webapp2_extras.sessions'] = {
     'secret_key': 'jhsdfln454toucre8n84r83yy',
 }
+
+message = mail.EmailMessage(sender="RobotArk <robotark@eternal-empire-750.appspotmail.com>",
+                            subject="Novo post a ser revisado", to="Time <robotica.1156@gmail.com>")
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -191,8 +195,12 @@ class UploadHandler(BaseUploadHandler):
                 search.TextField(name='title', value=self.request.get('title')),
                 search.TextField(name='subtitle', value=self.request.get('subtitle')),
                 search.TextField(name='url', value=self.request.get('subsubcategory')),
-                search.TextField(name='file_key', value=file_key)
+                search.TextField(name='file_key', value=file_key),
+                search.TextField(name='private', value=self.request.get('stage'))
             ])
+        if self.request.get('stage') == 'staged':
+            message.body = 'O usuário %s postou um novo arquivo. Vá a robotark.org/review para revisar' % user.nickname()
+        message.send()
         index.put(post)
         self.redirect('/')
 
@@ -210,7 +218,7 @@ class FileHandler(blobstore_handlers.BlobstoreDownloadHandler):
 class CategoryHandler(BaseHandler):
     def get(self):
         path = self.request.path
-        posts = index.search('url: "' + path + '"')
+        posts = index.search('url: "' + path + '" AND private = "public"')
         category = list(path.split('/'))
         print category
         nested = None
@@ -242,7 +250,7 @@ class CategoryHandler(BaseHandler):
 
 class SearchPage(BaseHandler):
     def get(self):
-        posts = index.search(self.request.get('category') + ': "' + self.request.get('query') + '"')
+        posts = index.search(self.request.get('category') + ': ' + self.request.get('query') + ' AND private = "public"')
         nested = None
         category = "Search results"
         content = {
@@ -267,11 +275,28 @@ class ShortLinkHandler(BaseHandler):
         self.response.write(JINJA_ENVIRONMENT.get_template("view.html").render(content))
 
 
+class StatsPage(BaseHandler):
+    def get(self):
+        data = index.get_range().results
+        print data
+        team = [t.fields[2].value.split(' ')[0] for t in data]
+        output = []
+        for t in set(team):
+            output.append([t, team.count(t)])
+        content = {
+            'data': json.dumps(output),
+            'user': users.get_current_user,
+            'users': users
+        }
+        self.response.write(JINJA_ENVIRONMENT.get_template("stats.html").render(content))
+
+
 class DeleteHandler(BaseHandler):
     def post(self):
         if users.is_current_user_admin():
             try:
                 index.delete(self.request.get('id'))
+                self.redirect('/')
             except search.Error:
                 self.error(404)
                 print 'no such Document'
@@ -289,6 +314,43 @@ class MePage(BaseHandler):
         self.response.write(JINJA_ENVIRONMENT.get_template("me.html").render(content))
 
 
+class ReviewPage(BaseHandler):
+    def get(self):
+        if users.is_current_user_admin():
+            posts = index.search('private = "staged"')
+            category = "Review"
+            content = {
+                'posts': posts,
+                'user': users.get_current_user,
+                'users': users,
+                'review': True
+            }
+            self.response.write(JINJA_ENVIRONMENT.get_template("view.html").render(content))
+        else:
+            self.error(403)
+            return
+
+
+class ApproveHandler(BaseHandler):
+    def post(self):
+        if users.is_current_user_admin():
+            doc_id = self.request.get('id')
+            post = index.get(doc_id)
+            post.fields[7] = search.TextField(name='private', value="public")
+            index.put(post)
+            self.redirect('/review')
+        else:
+            self.error(403)
+
+
+# class MigrateDebug(BaseHandler):
+#    def get(self):
+#        if users.is_current_user_admin():
+#            for p in index.get_range().results:
+#                p.fields.append(search.TextField(name='private', value="public"))
+#                index.put(p)
+
+
 # # # # # # # # # # # # BEGIN API # # # # # # # # # # # # # #
 #                  TODO: Develop API                        #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -302,6 +364,9 @@ application = webapp2.WSGIApplication([
     ('/search', SearchPage),
     ('/delete', DeleteHandler),
     ('/me', MePage),
+    ('/review', ReviewPage),
+    ('/approve', ApproveHandler),
+    ('/stats', StatsPage),
     ('/file/([^/]+)?', FileHandler),
     ('/upload_handler', UploadHandler),
     ('/.*', CategoryHandler)
