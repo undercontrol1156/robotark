@@ -228,6 +228,14 @@ main {
   min-height: 100%;
 }
 
+.tba {
+  background-color: #2222DD;
+  color: #F5F5F5;
+  padding: 0.35em 0.45em;
+  border-radius: 25%;
+  margin-right: 0.5em;
+}
+
 /** Larger Screens - desktops and tablets **/
 @media all and (min-width: 990px) {
   .app-bar {

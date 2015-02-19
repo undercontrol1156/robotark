@@ -7,8 +7,8 @@
     <meta name="description" content="Documents repository for FRC Teams">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RobotArk</title>
-    <link rel="stylesheet" href="/static/stylesheets/h5bp.css">
-    <link rel="stylesheet" href="/static/stylesheets/components/components.css">
+    <link rel="stylesheet" href="/static/stylesheets/h5bp.min.css">
+    <link rel="stylesheet" href="/static/stylesheets/components/components.min.css">
     <link rel="stylesheet" href="/static/stylesheets/main.css">
     <script src="/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js" async></script>
     <script src="/static/js/vendor/jquery-1.11.0.min.js"></script>
@@ -37,11 +37,11 @@
             </li>
             <li><a href="/mechanics">Mechanics</a>
             </li>
+            <li><a href="/cad">CAD</a>
+            </li>
             <li><a href="/team">Team</a>
             </li>
             <li><a href="/upload">Upload</a>
-            </li>
-            <li><a href="/stats">Stats</a>
             </li>
             <li>{% if user %}<a href="/me">Me</a>{% else %} <a href="{{ users.create_login_url() }}">Login</a>{% endif %}</li>
         </ul>
@@ -50,7 +50,7 @@
     <main>
         <br>
         <form action="/search" method="get">
-            <input type="text" name="query">
+            <input type="text" name="query" required>
             <select name="category">
                 <option value="title">Title</option>
                 <option value="subtitle">Subtitle</option>

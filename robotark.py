@@ -2,6 +2,7 @@
 
 import os
 import json
+import cgi
 from datetime import datetime, date, time
 
 import webapp2
@@ -29,73 +30,80 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-JINJA_ENVIRONMENT.globals = {'isinstance': isinstance, 'str': str, 'list': list}
+JINJA_ENVIRONMENT.globals = {'isinstance': isinstance, 'str': str, 'list': list, 'len': len, 'dict': dict}
 
 
 CATEGORIES = {
     'mechanics': {
-        'general': 'general',
+        'general': 'General',
         'pneumatics': [
             'theory',
             'datasheets'
         ],
-        'gearbox': 'gearbox',
-        'drivetrain': 'drivetrain',
-        'design': 'design'
+        'gearbox': 'Gearbox',
+        'drivetrain': 'Drivetrain',
+        'design': 'Design'
     },
     'electronics': {
-        'datasheets': [
-            'components',
-            'sensors',
-            'cots'
-        ],
-        'wiring': 'wiring',
-        'controlsystem': [
-            'crio',
-            'roborio',
-            'arduino',
-            'others'
-        ],
-        'sensoring': 'sensoring',
+        'datasheets': {
+            'components': 'Components',
+            'sensors': 'Sensors',
+            'cots': 'COTS'
+        },
+        'wiring': 'Wiring',
+        'controlsystem': {
+            'crio': 'cRIO',
+            'roborio': 'RoboRIO',
+            'arduino': 'Arduino',
+            'others': 'Others'
+        },
+        'sensoring': 'Sensoring',
         'theory': [
             'begginers',
             'advanced'
         ]
     },
     'programming': {
-        'c': [
-            'general',
-            'windriver',
-            'sensoring',
-            'examples',
-            'fullsystem'
-        ],
-        'labview': [
-            'basics',
-            'cv',
-            'signalanalysis',
-            'sensoring',
-            'examples',
-            'fullsystem'
-        ],
+        'c': {
+            'general': 'General',
+            'windriver': 'WindRiver',
+            'sensoring': 'Sensoring',
+            'examples': 'Examples',
+            'fullsystem': 'Full System'
+        },
+        'labview': {
+            'basics': 'Basics',
+            'cv': 'CV',
+            'signalanalysis': 'Signal Analysis',
+            'sensoring': 'Sensoring',
+            'examples': 'Examples',
+            'fullsystem': 'Full System'
+        },
+        'java': {
+            'general': 'General',
+            'eclipse': 'Eclipse',
+            'examples': 'Examples',
+            'fullsystem': 'Full System'
+        }
     },
     'cad': {
-        'autocad': 'autocad',
-        'inventor': 'inventor',
-        'solidworks': 'solidworks',
+        'autocad': 'AutoCAD',
+        'inventor': 'Inventor',
+        'solidworks': 'SolidWorks',
         'models': [
             'robots',
-            'gearbox',
-            'drivetrain',
+            'gearboxes',
+            'drivetrains',
             'others'
         ],
-        'others': 'others'
+        'others': 'Others'
     },
     'team': [
         'scouting',
         'sponsors',
         'chairmans',
         'events',
+        'safety',
         'websites'
     ]
 }
@@ -233,13 +241,15 @@ class CategoryHandler(BaseHandler):
             nested = CATEGORIES.get(category[1])
             for c in category[2:]:
                 print 'loooooooooooooop'
+                print nested
                 if isinstance(nested, str):
                     pass
                 elif isinstance(nested, list):
                     nested = nested[nested.index(c)]
                 else:
+                    print 'got object'
                     nested = nested.get(c)
-            print nested
+                print nested
         else:
             print 'invalid category'
         # EODM (End of dark magic)
@@ -256,7 +266,7 @@ class CategoryHandler(BaseHandler):
 
 class SearchPage(BaseHandler):
     def get(self):
-        posts = index.search(self.request.get('category') + ': ' + self.request.get('query') + ' AND private = "public"')
+        posts = index.search(self.request.get('category') + ': "' + self.request.get('query').replace('"', "'") + '" AND private = "public"')
         nested = None
         category = "Search results"
         content = {

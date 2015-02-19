@@ -39,6 +39,12 @@ var CATEGORIES = {
             'signalanalysis',
             'sensoring'
         ],
+        'java': [
+            'general',
+            'eclipse',
+            'examples',
+            'fullsystem'
+        ],
         'examples': 'examples'
     },
     'cad': {
@@ -77,6 +83,7 @@ function setOptions(chosen) {
     if (chosen === "programming") {
         selbox.options[selbox.options.length] = new Option('C', '/programming/c');
         selbox.options[selbox.options.length] = new Option('LabVIEW', '/programming/labview');
+        selbox.options[selbox.options.length] = new Option('Java', '/programming/java');
     }
     if (chosen === "mechanics") {
         selbox.options[selbox.options.length] = new Option('General', '/mechanics/general');
@@ -98,6 +105,7 @@ function setOptions(chosen) {
         selbox.options[selbox.options.length] = new Option('Sponsors', '/team/sponsors');
         selbox.options[selbox.options.length] = new Option('Websites', '/team/websites');
         selbox.options[selbox.options.length] = new Option('Chairmans', '/team/chairmans');
+        selbox.options[selbox.options.length] = new Option('Safety', '/team/safety');
         selbox.options[selbox.options.length] = new Option('------', '/team');
     }
 }
@@ -130,6 +138,12 @@ function setOptions2(chosen) {
         selbox.options[selbox.options.length] = new Option('Sensoring', '/programming/c/sensoring');
         selbox.options[selbox.options.length] = new Option('Examples', '/programming/c/examples');
         selbox.options[selbox.options.length] = new Option('Full System', '/programming/c/fullsystem');
+    }
+    if (chosen === "/programming/java") {
+        selbox.options[selbox.options.length] = new Option('General', '/programming/java/general');
+        selbox.options[selbox.options.length] = new Option('Eclipse', '/programming/java/eclipse');
+        selbox.options[selbox.options.length] = new Option('Examples', '/programming/java/examples');
+        selbox.options[selbox.options.length] = new Option('Full System', '/programming/java/fullsystem');
     }
     if (chosen === "/programming/labview") {
         selbox.options[selbox.options.length] = new Option('Basics', '/programming/labview/basics');
