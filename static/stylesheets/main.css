@@ -338,7 +338,7 @@ main {
   font-style: normal;
   font-weight: 300;
   src: url(/static/fonts/RobotoCondensed-Light.eot);
-  src: local('Roboto Condensed Light'), local('RobotoCondensed-Light'), url(/fonts/RobotoCondensed-Light.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Light.woff) format('woff');
+  src: local('Roboto Condensed Light'), local('RobotoCondensed-Light'), url(/static/fonts/RobotoCondensed-Light.eot) format('embedded-opentype'), url(/static/fonts/RobotoCondensed-Light.woff) format('woff');
 }
 
 @font-face {
@@ -346,7 +346,7 @@ main {
   font-style: normal;
   font-weight: 400;
   src: url(/static/fonts/RobotoCondensed-Regular.eot);
-  src: local('Roboto Condensed Regular'), local('RobotoCondensed-Regular'), url(/fonts/RobotoCondensed-Regular.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Regular.woff) format('woff');
+  src: local('Roboto Condensed Regular'), local('RobotoCondensed-Regular'), url(/static/fonts/RobotoCondensed-Regular.eot) format('embedded-opentype'), url(/static/fonts/RobotoCondensed-Regular.woff) format('woff');
 }
 
 @font-face {
@@ -354,7 +354,7 @@ main {
   font-style: normal;
   font-weight: 700;
   src: url(/static/fonts/RobotoCondensed-Bold.eot);
-  src: local('Roboto Condensed Regular'), local('RobotoCondensed-Bold'), url(/fonts/RobotoCondensed-Bold.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Bold.woff) format('woff');
+  src: local('Roboto Condensed Regular'), local('RobotoCondensed-Bold'), url(/static/fonts/RobotoCondensed-Bold.eot) format('embedded-opentype'), url(/static/fonts/RobotoCondensed-Bold.woff) format('woff');
 }
 
 @font-face {
@@ -362,7 +362,7 @@ main {
   font-style: italic;
   font-weight: 300;
   src: url(/static/fonts/RobotoCondensed-LightItalic.eot);
-  src: local('Roboto Condensed Light Italic'), local('RobotoCondensed-LightItalic'), url(/fonts/RobotoCondensed-LightItalic.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-LightItalic.woff) format('woff');
+  src: local('Roboto Condensed Light Italic'), local('RobotoCondensed-LightItalic'), url(/static/fonts/RobotoCondensed-LightItalic.eot) format('embedded-opentype'), url(/static/fonts/RobotoCondensed-LightItalic.woff) format('woff');
 }
 
 @font-face {
@@ -370,7 +370,7 @@ main {
   font-style: italic;
   font-weight: 400;
   src: url(/static/fonts/RobotoCondensed-Italic.eot);
-  src: local('Roboto Condensed Italic'), local('RobotoCondensed-Italic'), url(/fonts/RobotoCondensed-Italic.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Italic.woff) format('woff');
+  src: local('Roboto Condensed Italic'), local('RobotoCondensed-Italic'), url(/static/fonts/RobotoCondensed-Italic.eot) format('embedded-opentype'), url(/static/fonts/RobotoCondensed-Italic.woff) format('woff');
 }
 
 @font-face {
@@ -378,5 +378,5 @@ main {
   font-style: italic;
   font-weight: 700;
   src: url(/static/fonts/RobotoCondensed-BoldItalic.eot);
-  src: local('Roboto Condensed Bold Italic'), local('RobotoCondensed-BoldItalic'), url(/fonts/RobotoCondensed-BoldItalic.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-BoldItalic.woff) format('woff');
+  src: local('Roboto Condensed Bold Italic'), local('RobotoCondensed-BoldItalic'), url(/static/fonts/RobotoCondensed-BoldItalic.eot) format('embedded-opentype'), url(/static/fonts/RobotoCondensed-BoldItalic.woff) format('woff');
 }

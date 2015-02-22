@@ -538,8 +538,8 @@ pre {
 
 @font-face {
   font-family: "icons";
-  src: url("../../images/icons/icons.eot");
-  src: url("../../images/icons/icons.eot?#iefix") format("embedded-opentype"), url("../../images/icons/icons.woff2") format("woff2"), url("../../images/icons/icons.woff") format("woff"), url("../../images/icons/icons.ttf") format("truetype"), url("../../images/icons/icons.svg?#icons") format("svg");
+  src: url("/static/images/icons/icons.eot");
+  src: url("/static/images/icons/icons.eot?#iefix") format("embedded-opentype"), url("/static/images/icons/icons.woff2") format("woff2"), url("/static/images/icons/icons.woff") format("woff"), url("/static/images/icons/icons.ttf") format("truetype"), url("/static/images/icons/icons.svg?#icons") format("svg");
   font-weight: normal;
   font-style: normal;
 }

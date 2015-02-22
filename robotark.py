@@ -30,7 +30,10 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-JINJA_ENVIRONMENT.globals = {'isinstance': isinstance, 'str': str, 'list': list, 'len': len, 'dict': dict}
+parse = lambda x: int(''.join([y for y in x if y in '0123456789']))
+
+JINJA_ENVIRONMENT.globals = {'isinstance': isinstance, 'str': str, 'list': list
+                             , 'len': len, 'dict': dict, 'parse': parse}
 
 
 CATEGORIES = {
@@ -157,6 +160,10 @@ class MainPage(BaseHandler):
         }
         self.response.write(JINJA_ENVIRONMENT.get_template("index.html").render(content))
 
+
+class FaviconHack(BaseHandler):
+    def get(self):
+        self.response.write('not available sorry')
 
 class AboutPage(BaseHandler):
     def get(self):
@@ -295,7 +302,8 @@ class StatsPage(BaseHandler):
     def get(self):
         data = index.get_range().results
         print data
-        team = [t.fields[2].value.split(' ')[0] for t in data]
+        # team = [t.fields[2].value.split(' ')[0] for t in data]
+        team = [parse(t) for t in data]
         output = []
         for t in set(team):
             output.append([t, team.count(t)])
@@ -374,6 +382,7 @@ class ApproveHandler(BaseHandler):
 
 application = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/favicon.ico', FaviconHack),
     ('/upload', UploadPage),
     ('/link/([^/]+)?', ShortLinkHandler),
     ('/about', AboutPage),
